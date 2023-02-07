@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Double } from "typeorm";
+import { Story } from "./story.entity";
 
 @Entity()
 export class User {
@@ -17,4 +18,10 @@ export class User {
 
   @Column('int')
   commentsNumber: number;
+  
+  @Column('double')
+  rating: number;
+
+  @OneToMany(() => Story, (story) => story.users)
+  story: Story[]
 }
