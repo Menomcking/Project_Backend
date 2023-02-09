@@ -17,10 +17,10 @@ export class Users {
   @Column()
   email: string;
 
-  @Column('int')
+  @Column('int', {default: 0})
   commentsNumber: number;
   
-  @Column('double')
+  @Column('double', {default: 0})
   rating: number;
 
   @OneToMany(() => Story, (story) => story.users)
