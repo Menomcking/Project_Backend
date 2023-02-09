@@ -1,13 +1,28 @@
-import{Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm"
-import { User } from "./users.entity";
+import{Column, Double, Entity, Long, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm"
+import { Ratings } from "./ratings.entity";
+import { StoryParts } from "./storyParts.entity";
+import { Users } from "./users.entity";
 
 @Entity()
 export class Story{
     @PrimaryGeneratedColumn()
-    storyid: number;
+    id: number;
 
+    @Column()
+    authorId: number;
 
+    @Column('Double')
+    rating: number;
 
-    @ManyToOne(() => User, (users) => users.story)
-    users: User
+    @Column()
+    title: string;
+
+    @OneToMany(() => StoryParts, (storyparts) => storyparts.story)
+    storyparts: StoryParts[]
+
+    @ManyToOne(() => Users, (users) => users.story)
+    users: Users
+
+    @OneToMany(() => Ratings, (ratings) => ratings.story)
+    ratings: Ratings[]
 }
