@@ -1,6 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post, Render } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppService } from './app.service';
+import NewUserDto from './newUser.dto';
+import { User } from './users.entity';
 
 @Controller()
 export class AppController {
@@ -9,9 +12,10 @@ export class AppController {
     private dataSource: DataSource,
   ) {}
 
-  @Get()
-  @Render('index')
-  index() {
-    return { message: 'Welcome to the homepage' };
+  @Post('/register')
+  async newUser(@Body() user: NewUserDto) {
+    const userRepo = this.dataSource.getRepository(User);
+    userRepo.save(user);
+    return user;
   }
 }
