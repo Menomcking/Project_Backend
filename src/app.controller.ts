@@ -3,7 +3,7 @@ import { Body, Controller, Get, Post, Render } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppService } from './app.service';
 import NewUserDto from './newUser.dto';
-import { User } from './users.entity';
+import { Users } from './users.entity';
 
 @Controller()
 export class AppController {
@@ -14,7 +14,7 @@ export class AppController {
 
   @Post('/register')
   async newUser(@Body() user: NewUserDto) {
-    const userRepo = this.dataSource.getRepository(User);
+    const userRepo = this.dataSource.getRepository(Users);
     userRepo.save(user);
     return user;
   }
