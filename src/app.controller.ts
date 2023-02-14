@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Post, Render } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Render } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppService } from './app.service';
 import NewUserDto from './newUser.dto';
@@ -17,5 +17,11 @@ export class AppController {
     const userRepo = this.dataSource.getRepository(Users);
     userRepo.save(user);
     return user;
+  }
+
+  @Delete('/register/:id')
+  async deleteUser(@Param('id') id: number) {
+    const userRepo = this.dataSource.getRepository(Users)
+    userRepo.delete(id)
   }
 }

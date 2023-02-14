@@ -11,7 +11,7 @@ export class Story{
     @Column()
     authorId: number;
 
-    @Column('Double')
+    @Column('double')
     rating: number;
 
     @Column()
