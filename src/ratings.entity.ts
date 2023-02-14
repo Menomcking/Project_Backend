@@ -14,8 +14,10 @@ export class Ratings{
     @ManyToOne(() => Story, (story) => story.ratings)
     story: Story;
     
+    @Column({nullable: true})
+    comment: string;
 
-    @Column()
+    @Column({nullable: true})
     rating: number;
 
 }
