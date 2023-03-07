@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Double } from "typeorm";
-import { Ratings } from "./ratings.entity";
-import { Story } from "./story.entity";
+import { Ratings } from "../db/database/entities/ratings.entity";
+import { Story } from "../db/database/entities/story.entity";
 
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
