@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Ratings } from './db/database/entities/ratings.entity';
-import { Story } from './db/database/entities/story.entity';
+import { Story } from './story/story.entity';
 import { StoryParts } from './db/database/entities/storyParts.entity';
 import { Users } from './users/users.entity';
 import { ConfigModule } from '@nestjs/config';

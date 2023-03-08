@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Double } from "typeorm";
 import { Ratings } from "../db/database/entities/ratings.entity";
-import { Story } from "../db/database/entities/story.entity";
+import { Story } from "../story/story.entity";
 
 @Entity()
 export class Users {
