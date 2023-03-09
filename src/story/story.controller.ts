@@ -1,16 +1,28 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 import { Users } from 'src/users/users.entity';
+import { Story } from './entities/story.entity';
+import NewStoryDto from 'src/dto/newStory.dto';
+import { DataSource } from 'typeorm';
 
 @Controller('story')
 export class StoryController {
-  constructor(private readonly storyService: StoryService) {}
+  constructor(
+    private readonly storyService: StoryService,
+    private dataSource: DataSource,
+    ) {}
 
-  @Post('add')
-  create(@Body() createStoryDto: CreateStoryDto, @Req() req: Express.Request) {
-    return this.storyService.create(createStoryDto, req.user as Users);
+  @Post('/newstory')
+  async newStory(@Body() story: NewStoryDto) {
+    const storyRepo = this.dataSource.getRepository(Story)
+    const storyEnitity = new Story();
+    storyRepo.save(storyEnitity)
+    
+
+    return story;
   }
 
   @Get()
