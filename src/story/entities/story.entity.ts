@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 import{Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm"
-import { Ratings } from "../db/database/entities/ratings.entity";
-import { StoryParts } from "../db/database/entities/storyParts.entity";
-import { Users } from "../users/users.entity";
+import { Ratings } from "../../db/database/entities/ratings.entity";
+import { StoryParts } from "./storyParts.entity";
+import { Users } from "../../users/users.entity";
 
 @Entity()
 export class Story{
@@ -10,13 +9,16 @@ export class Story{
     id: number;
 
     @Column()
-    authorId: number;
+    picture: string;
 
     @Column('double')
     rating: number;
 
     @Column()
     title: string;
+     
+    @Column()
+    description: string;
 
     @OneToMany(() => StoryParts, (storyparts) => storyparts.story)
     storyparts: StoryParts[]
