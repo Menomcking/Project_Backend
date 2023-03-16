@@ -8,7 +8,7 @@ export class Story{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column('')
     picture: string;
 
     @Column('double')

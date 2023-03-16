@@ -10,6 +10,6 @@ export class StoryParts{
     textPart: string;
 
     @ManyToOne(() => Story, (story) => story.storyparts)
-    story: Story[]
+    story: Story
 
 }
