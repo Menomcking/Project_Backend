@@ -1,19 +1,17 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 import { Users } from 'src/users/users.entity';
-import CreateStoryPartsDto from './dto/create-storyParts.dto';
-import { TokenPayload } from 'src/auth/tokenPayload.interface';
 
 @Controller('story')
 export class StoryController {
-  constructor(
-    private readonly storyService: StoryService) {}
+  constructor(private readonly storyService: StoryService) {}
 
   @Post('add')
-  create(@Body() createStoryDto: CreateStoryDto, createStoryPartsDto: CreateStoryPartsDto, @Req() req: Express.Request, payload: TokenPayload) {
-    return this.storyService.createStory(createStoryDto.picture, 0, createStoryDto.title,createStoryDto.description,createStoryPartsDto.textPart,req.user as Users);
+  create(@Body() createStoryDto: CreateStoryDto, @Req() req: Express.Request) {
+    return this.storyService.create(createStoryDto, req.user as Users);
   }
 
   @Get()
