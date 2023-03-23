@@ -25,7 +25,7 @@ export class StoryService {
     rating: number,
     title: string,
     description: string,
-    textPart: string,
+    textPart: string[],
     user: Users
   ) {
     const queryRunner = this.connection.createQueryRunner();
@@ -46,18 +46,19 @@ export class StoryService {
       const savedStory = await queryRunner.manager.save(story);
 
       // Create a new StoryParts
+      /*
       const storyParts = new StoryParts();
       storyParts.textPart = textPart;
       storyParts.story = savedStory;
 
       // Save the new StoryParts
-      const savedStoryParts = await queryRunner.manager.save(storyParts);
+      const savedStoryParts = await queryRunner.manager.save(storyParts);*/
 
       // Commit the transaction
       await queryRunner.commitTransaction();
 
       // Return the saved entities
-      return { savedStory, savedStoryParts };
+      return { savedStory };
     } catch (error) {
       // Rollback the transaction if any errors occur
       await queryRunner.rollbackTransaction();

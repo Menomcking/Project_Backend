@@ -15,8 +15,14 @@ export class StoryController {
     private readonly storyService: StoryService) {}
 
   @Post('add-story')
-  create(@Body() createStoryDto: CreateStoryDto, createStoryPartsDto: CreateStoryPartsDto, @Req() req: Express.Request) {
-    return this.storyService.createStory(createStoryDto.picture, 0, createStoryDto.title,createStoryDto.description,createStoryPartsDto.textPart,req.user as Users);
+  create(@Body() createStoryDto: CreateStoryDto, @Req() req: Express.Request) {
+    return this.storyService.createStory(
+      createStoryDto.picture,
+      0,
+      createStoryDto.title,
+      createStoryDto.description,
+      createStoryDto.textPart.map(part => part.textPart),
+      req.user as Users);
   }
 
   @Get()
