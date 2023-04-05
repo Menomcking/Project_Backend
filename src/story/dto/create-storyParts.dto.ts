@@ -1,7 +1,11 @@
-import { IsDefined, MinLength } from "class-validator";
+/* eslint-disable prettier/prettier */
+import { ArrayMinSize, ArrayNotEmpty, IsArray, IsDefined, IsNotEmpty, IsString, MinLength, ValidateNested } from "class-validator";
 
 export default class StoryPartsDto {
+
+    storyId: number;
+
     @IsDefined({message: 'A szövegrészlet megadása kötelező.'})
-    @MinLength(10, {message: 'A szövegrészletnek legalább 10 karakter hosszúnak kell lennie.'})
-    textPart: string;
+    @IsArray()
+    textPart: string[];
 }

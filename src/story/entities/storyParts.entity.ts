@@ -7,8 +7,11 @@ export class StoryParts{
     @PrimaryGeneratedColumn()
     textPartId: number;
 
-    @Column('text')
-    textPart: string;
+    @Column()
+    storyId: number;
+
+    @Column({ type: 'text', array: true })
+    textPart: string[];
 
     @ManyToOne(() => Story, (story) => story.storyparts)
     story: Story

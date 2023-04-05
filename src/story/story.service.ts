@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,12 +21,47 @@ export class StoryService {
     private usersService: UsersService
   ) {}
 
+  async createStoryparts(textParts: string[]) {
+    const queryRunner = this.connection.createQueryRunner();
+  
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+  
+    try {
+      // Create a new Story
+      const story = new Story();
+  
+      // Save the new Story
+      const savedStory = await queryRunner.manager.save(story);
+  
+      // Create a new StoryParts for each textPart
+      const storyParts = textParts.map(text => {
+        const part = new StoryParts();
+        part.textPart = [text];
+        part.story = savedStory;
+        return part;
+      });
+  
+      // Save the new StoryParts
+      const savedStoryParts = await queryRunner.manager.save(storyParts);
+  
+      // Return the saved entities
+      return { savedStoryParts };
+    } catch (error) {
+      // Rollback the transaction if any errors occur
+      await queryRunner.rollbackTransaction();
+      throw new Error(`Transaction failed. Rolled back. ${error.message}`);
+    } finally {
+      // Release the query runner
+      await queryRunner.release();
+    }
+  }
+
   async createStory(
     picture: string,
     rating: number,
     title: string,
     description: string,
-    textPart: string[],
     user: Users
   ) {
     const queryRunner = this.connection.createQueryRunner();
@@ -44,15 +80,6 @@ export class StoryService {
 
       // Save the new Story
       const savedStory = await queryRunner.manager.save(story);
-
-      // Create a new StoryParts
-      /*
-      const storyParts = new StoryParts();
-      storyParts.textPart = textPart;
-      storyParts.story = savedStory;
-
-      // Save the new StoryParts
-      const savedStoryParts = await queryRunner.manager.save(storyParts);*/
 
       // Commit the transaction
       await queryRunner.commitTransaction();

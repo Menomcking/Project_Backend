@@ -21,8 +21,12 @@ export class StoryController {
       0,
       createStoryDto.title,
       createStoryDto.description,
-      createStoryDto.textPart.map(part => part.textPart),
       req.user as Users);
+  }
+
+  @Post('add-storyparts')
+  createStoryparts(@Body() createStoryPartsDto: CreateStoryPartsDto, @Req() req: Express.Request) {
+    return this.storyService.createStoryparts(createStoryPartsDto.textPart);
   }
 
   @Get()
