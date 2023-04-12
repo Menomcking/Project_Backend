@@ -4,7 +4,6 @@ import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
 import { Users } from 'src/users/users.entity';
-import CreateStoryPartsDto from './dto/create-storyParts.dto';
 import { Story } from './entities/story.entity';
 import NewStoryDto from 'src/dto/newStory.dto';
 import { DataSource } from 'typeorm';
@@ -21,12 +20,8 @@ export class StoryController {
       0,
       createStoryDto.title,
       createStoryDto.description,
+      createStoryDto.textPart,
       req.user as Users);
-  }
-
-  @Post('add-storyparts')
-  createStoryparts(@Body() createStoryPartsDto: CreateStoryPartsDto, @Req() req: Express.Request) {
-    return this.storyService.createStoryparts(createStoryPartsDto.textPart);
   }
 
   @Get()
