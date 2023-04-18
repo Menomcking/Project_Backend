@@ -99,9 +99,22 @@ export class StoryService {
     return `This action returns all story`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} story`;
+  async findOne(id: number): Promise<Pick<Story, 'title' | 'description' | 'picture' | 'rating'>> {
+    const story = await this.storyRepository.findOne({
+      where: {
+        id,
+      },
+      select: [ 'id', 'title', 'description', 'picture', 'rating'],
+      relations: ['storyparts', 'users', 'ratings'],
+    });
+
+    if (!story) {
+      throw new Error(`Story with id ${id} not found`);
+    }
+
+    return story;
   }
+
 
   update(id: number, updateStoryDto: UpdateStoryDto) {
     return `This action updates a #${id} story`;

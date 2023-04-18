@@ -34,9 +34,9 @@ export class StoryController {
     return this.storyService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storyService.findOne(+id);
+  @Get('list/:id')
+  findOne(@Param('id') id: string) {  Promise<Story>
+    return this.storyService.findOne(Number(id));
   }
 
   @Patch(':id')

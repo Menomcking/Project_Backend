@@ -1,7 +1,7 @@
 import{Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm"
-import { Ratings } from "../../db/database/entities/ratings.entity";
 import { StoryParts } from "./storyParts.entity";
 import { Users } from "../../users/users.entity";
+import { Ratings } from "src/ratings/entities/rating.entity";
 
 @Entity()
 export class Story{

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Ratings } from './db/database/entities/ratings.entity';
 import { Story } from './story/entities/story.entity';
 import { StoryParts } from './story/entities/storyParts.entity';
 import { Users } from './users/users.entity';
@@ -14,6 +13,8 @@ import { UsersModule } from './users/users.module';
 import { AuthenticationService } from './auth/authentication.service';
 import { UsersService } from './users/users.service';
 import { StoryModule } from './story/story.module';
+import { RatingsModule } from './ratings/ratings.module';
+import { Ratings } from './ratings/entities/rating.entity';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { StoryModule } from './story/story.module';
         JWT_EXPIRATION_TIME: Joi.string().required(),
       })
     }),
-    AuthenticationModule,UsersModule, StoryModule
+    AuthenticationModule,UsersModule, StoryModule, RatingsModule
   ],
   controllers: [AppController],
   providers: [AppService],

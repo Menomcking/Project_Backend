@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
+import { Story } from "src/story/entities/story.entity";
+import { Users } from "src/users/users.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Story } from "../../../story/entities/story.entity";
-import { Users } from "../../../users/users.entity";
 
 @Entity()
 export class Ratings{
