@@ -1,5 +1,5 @@
-import { IsDefined, MaxLength, MinLength } from "class-validator";
-import StoryPartsDto from "./create-storyParts.dto";
+/* eslint-disable prettier/prettier */
+import { IsArray, IsDefined, MaxLength, MinLength } from "class-validator";
 
 export class CreateStoryDto {
     @IsDefined({message: 'A cím megadása kötelező.'})
@@ -15,5 +15,7 @@ export class CreateStoryDto {
     @MaxLength(200, {message: 'A leaírásnak maximum 200 karakter hosszűnak kell lennie.'})
     description: string;
 
-    textPart: StoryPartsDto[];
+    @IsDefined({message: 'A szövegrészlet megadása kötelező.'})
+    @IsArray()
+    textPart: string[];
 }
