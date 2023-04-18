@@ -99,4 +99,8 @@ export class StoryService {
   remove(id: number) {
     return `This action removes a #${id} story`;
   }
+
+  async findAllById (id: number): Promise<Story[]> {
+    return this.storyRepository.findBy({ id: id })
+  }
 }

@@ -37,6 +37,11 @@ export class StoryController {
     return this.storyService.findOne(Number(id));
   }
 
+  @Get('list/:id')
+  findAllById(@Param('id') id: number) {
+    return this.storyService.findAllById(id);
+  }  
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoryDto: UpdateStoryDto) {
     return this.storyService.update(+id, updateStoryDto);
