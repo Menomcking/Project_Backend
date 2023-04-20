@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import{Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm"
 import { StoryParts } from "./storyParts.entity";
 import { Users } from "../../users/users.entity";

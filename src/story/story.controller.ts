@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Request } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
@@ -27,20 +27,33 @@ export class StoryController {
       req.user as Users);
   }
 
+  @Get('get-user-stories')
+  @UseGuards(JwtAuthenticationGuard)
+  async getUserStories(@Request() req) {
+    const userId = req.user.id;
+    return this.storyService.findAllByUserId(userId);
+  }
+
+  @Get('get-story/:storyId')
+  @UseGuards(JwtAuthenticationGuard)
+  async getStory(@Param('storyId') storyId: number): Promise<Story> {
+    return this.storyService.findOne(storyId);
+  }
+
   @Get()
   findAll() {
     return this.storyService.findAll();
   }
 
   @Get('list/:id')
-  findOne(@Param('id') id: string) {  Promise<Story>
-    return this.storyService.findOne(Number(id));
+  findOne(@Param('id') id: string): Promise<Story> {
+  return this.storyService.findOne(Number(id));
   }
 
-  @Get('list/:id')
-  findAllById(@Param('id') id: number) {
-    return this.storyService.findAllById(id);
-  }  
+  /*@Get('list-by-user/:id')
+  findAllById(@Param('id') id: number): Promise<Story[]> {
+  return this.storyService.findAllById(id);
+  }*/
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoryDto: UpdateStoryDto) {

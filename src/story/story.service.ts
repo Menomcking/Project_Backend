@@ -75,19 +75,18 @@ export class StoryService {
     return `This action returns all story`;
   }
 
-  async findOne(id: number): Promise<Pick<Story, 'title' | 'description' | 'picture' | 'rating'>> {
+  async findOne(id: number): Promise<Story> {
     const story = await this.storyRepository.findOne({
       where: {
         id,
       },
-      select: [ 'id', 'title', 'description', 'picture', 'rating'],
       relations: ['storyparts', 'users', 'ratings'],
     });
-
+  
     if (!story) {
       throw new Error(`Story with id ${id} not found`);
     }
-
+  
     return story;
   }
 
@@ -100,7 +99,11 @@ export class StoryService {
     return `This action removes a #${id} story`;
   }
 
-  async findAllById (id: number): Promise<Story[]> {
-    return this.storyRepository.findBy({ id: id })
+  async findAllByUserId(id: number): Promise<Story[]> {
+    return this.storyRepository.find({
+      where: {
+        users: { id }
+      }
+    });
   }
 }
