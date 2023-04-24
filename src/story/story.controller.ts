@@ -40,6 +40,14 @@ export class StoryController {
     return this.storyService.findOne(storyId);
   }
 
+  @Patch('update-story/:storyId')
+    async updateStory(
+  @Param('id') id: number,
+  @Body() updateStoryDto: UpdateStoryDto,
+    ): Promise<Story> {
+  return this.storyService.update(id, updateStoryDto);
+  }
+
   @Get()
   findAll() {
     return this.storyService.findAll();
