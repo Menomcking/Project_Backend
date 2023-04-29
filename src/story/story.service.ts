@@ -100,9 +100,15 @@ export class StoryService {
   
     const { picture, title, description, textPart } = updateStoryDto;
   
-    story.picture = picture !== undefined ? picture : story.picture;
-    story.title = title !== undefined ? title : story.title;
-    story.description = description !== undefined ? description : story.description;
+    if (picture !== undefined) {
+      story.picture = picture;
+    }
+    if (title !== undefined) {
+      story.title = title;
+    }
+    if (description !== undefined) {
+      story.description = description;
+    }
   
     const storyParts = await this.storyPartsRepository.find({
       where: { story: { id } },
@@ -114,18 +120,14 @@ export class StoryService {
           storyParts[i].textPart = [textPart[i]];
           await this.storyPartsRepository.save(storyParts[i]);
         }
-      } else if (storyParts.length < textPart.length) {
+      } else {
         for (let i = storyParts.length; i < textPart.length; i++) {
           const newStoryPart = new StoryParts();
           newStoryPart.textPart = [textPart[i]];
           newStoryPart.story = story;
           await this.storyPartsRepository.save(newStoryPart);
         }
-      } else {
-        throw new Error(
-          `Number of text parts (${textPart.length}) doesn't match the current number of story parts (${storyParts.length})`,
-        );
-      }
+      } 
     }
   
     return this.storyRepository.save(story);

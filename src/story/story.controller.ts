@@ -40,7 +40,7 @@ export class StoryController {
     return this.storyService.findOne(storyId);
   }
 
-  @Patch('update-story/:storyId')
+  @Patch('update-story/:id')
     async updateStory(
   @Param('id') id: number,
   @Body() updateStoryDto: UpdateStoryDto,
