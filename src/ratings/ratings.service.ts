@@ -1,26 +1,49 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Story } from 'src/story/entities/story.entity';
+import { Repository } from 'typeorm';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
+import { Ratings } from './entities/rating.entity';
 
 @Injectable()
 export class RatingsService {
-  create(createRatingDto: CreateRatingDto) {
-    return 'This action adds a new rating';
-  }
+  constructor(
+    @InjectRepository(Ratings)
+    private readonly ratingsRepository: Repository<Ratings>,
+    @InjectRepository(Story)
+    private readonly storyRepository: Repository<Story>,
+  ) {}
+  async create(ratingData: Partial<Ratings>): Promise<Ratings> {
+    const rating = new Ratings();
+    rating.users = ratingData.users;
+    rating.rating = ratingData.rating;
 
-  findAll() {
-    return `This action returns all ratings`;
-  }
+    if (ratingData.story) {
+      const story = await this.storyRepository.createQueryBuilder('story')
+        .leftJoinAndSelect('story.ratings', 'ratings')
+        .where('story.id = :id', { id: ratingData.story })
+        .getOne();
 
-  findOne(id: number) {
-    return `This action returns a #${id} rating`;
-  }
+      if (!story) {
+        throw new Error('Story not found');
+      }
 
-  update(id: number, updateRatingDto: UpdateRatingDto) {
-    return `This action updates a #${id} rating`;
-  }
+      const storyRatings = story.ratings;
+      const totalRating = storyRatings.reduce(
+        (sum, r) => sum + r.rating,
+        rating.rating,
+      );
+      const averageRating = totalRating / storyRatings.length;
 
-  remove(id: number) {
-    return `This action removes a #${id} rating`;
+      story.rating = averageRating;
+      await this.storyRepository.save(story);
+
+      rating.story = story;
+    }
+
+    const savedRating = await this.ratingsRepository.save(rating);
+
+    return savedRating;
   }
 }

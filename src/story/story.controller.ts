@@ -27,14 +27,24 @@ export class StoryController {
       req.user as Users);
   }
 
-  @Get()
-  findAll() {
-    return this.storyService.findAll();
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const story = await this.storyService.findOne(+id);
+    return {
+      id: story.id,
+      picture: story.picture,
+      rating: story.rating,
+      title: story.title,
+      description: story.description,
+      storyparts: story.storyparts.map((part) => ({
+        textPart: part.textPart,
+      })),
+    };
   }
 
-  @Get('list/:id')
-  findOne(@Param('id') id: string) {  Promise<Story>
-    return this.storyService.findOne(Number(id));
+  @Get('list')
+  async find() {
+    return (await this.storyService.find()).map(s => ({ id: s.id, title: s.title, picture: s.picture, description: s.description, rating: s.rating}));
   }
 
   @Patch(':id')

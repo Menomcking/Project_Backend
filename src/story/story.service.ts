@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/users/users.entity';
@@ -71,24 +71,35 @@ export class StoryService {
       await queryRunner.release();
     }
   }
-  findAll() {
-    return `This action returns all story`;
+  async findOne(id: number): Promise<Story> {
+    const story = await this.storyRepository.findOne({
+      where: {id},
+      relations: ['storyparts'],
+    });
+    return story;
   }
 
-  async findOne(id: number): Promise<Pick<Story, 'title' | 'description' | 'picture' | 'rating'>> {
-    const story = await this.storyRepository.findOne({
-      where: {
-        id,
-      },
+  async find() { 
+    const stories = await this.storyRepository.find({
       select: [ 'id', 'title', 'description', 'picture', 'rating'],
       relations: ['storyparts', 'users', 'ratings'],
     });
 
-    if (!story) {
-      throw new Error(`Story with id ${id} not found`);
+    if (stories.length == 0) {
+      throw new Error(``);
     }
-
-    return story;
+    const selectedStories: Story[] = []
+    for (let index = 0; index < 5; index++) {
+      if (stories.length == 0){
+        break;
+      }
+      const selectedIndex = Math.floor(Math.random()*stories.length)
+      
+      selectedStories.push(stories[selectedIndex])
+      stories.splice(selectedIndex, 1);
+    }
+    
+    return selectedStories;
   }
 
 
