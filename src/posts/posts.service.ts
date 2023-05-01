@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import CreatePostDto from './dto/createPost.dto';
 import Post from './post.entity';

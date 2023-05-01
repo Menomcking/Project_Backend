@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Contains, IsDefined, IsEmail, isEmail, IsOptional, IsStrongPassword, Length, Max, MAX, MaxLength, Min, MinLength } from "class-validator";
 
 export default class EditUserDto {

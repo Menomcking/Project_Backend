@@ -20,7 +20,16 @@ export class StoryService {
     private connection: Connection,
     private usersService: UsersService
   ) {}
-
+/**
+ * 
+ * @param picture string, a történethez tartozó kép URL-je
+ * @param rating szám, a történet értékelése
+ * @param title string, a történet címe
+ * @param description string, a történet leírása
+ * @param textPart stringekből álló tömb, a történet szöveg részei
+ * @param user Felhasználó
+ * @returns Új történet kerül létrehozásra
+ */
   async createStory(
     picture: string,
     rating: number,
@@ -74,7 +83,11 @@ export class StoryService {
   findAll() {
     return `This action returns all story`;
   }
-
+  /**
+   * 
+   * @param id azonosító
+   * @returns Az azonosítójához tartozó történetet adja vissza
+   */
   async findOne(id: number): Promise<Story> {
     const story = await this.storyRepository.findOne({
       where: {
@@ -90,7 +103,12 @@ export class StoryService {
     return story;
   }
 
-
+  /**
+   * 
+   * @param id azonosító
+   * @param updateStoryDto A történet módosításához szükséges Dto fájl
+   * @returns Elmenti a történetben keletkezett módosításokat
+   */
   async update(id: number, updateStoryDto: UpdateStoryDto): Promise<Story> {
     const story = await this.storyRepository.findOne({ where: { id } });
   
@@ -136,7 +154,11 @@ export class StoryService {
   remove(id: number) {
     return `This action removes a #${id} story`;
   }
-
+  /**
+   * 
+   * @param id azonosító
+   * @returns A felhasználó azonosítója alapján visszaadja a hozzá tartozó történeteket
+   */
   async findAllByUserId(id: number): Promise<Story[]> {
     return this.storyRepository.find({
       where: {
