@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Request } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto';
@@ -14,7 +14,12 @@ import JwtAuthenticationGuard from 'src/auth/jwt-authentication.guard';
 export class StoryController {
   constructor(
     private readonly storyService: StoryService) {}
-
+    /**
+     * 
+     * @param createStoryDto Történet létrehozásához szükséges dto fájl
+     * @param req Request, ami kéri a felhasználót
+     * @returns Létrehoz egy új történetet a paraméterekkel együtt
+     */
   @Post('add-story')
   @UseGuards(JwtAuthenticationGuard)
   create(@Body() createStoryDto: CreateStoryDto, @Req() req: Express.Request) {
@@ -29,6 +34,34 @@ export class StoryController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
+    const story = await this.storyService.findOne(+id);
+    return {
+      id: story.id,
+      picture: story.picture,
+      rating: story.rating,
+      title: story.title,
+      description: story.description,
+      storyparts: story.storyparts.map((part) => ({
+        textPart: part.textPart,
+      })),
+    };
+  }
+  /**
+   * 
+   * @param id Azonosító
+   * @param updateStoryDto A történet módosításához szükséges dto fájl
+   * @returns Id alapján módosítja a már létező történetet adatait
+   */
+  @Patch('update-story/:id')
+    async updateStory(
+  @Param('id') id: number,
+  @Body() updateStoryDto: UpdateStoryDto,
+    ): Promise<Story> {
+  return this.storyService.update(id, updateStoryDto);
+  }
+
+  @Get(':id')
+  async findOnesStory(@Param('id') id: string) {
     const story = await this.storyService.findOne(+id);
     return {
       id: story.id,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Contains, IsDefined, IsEmail, isEmail, IsStrongPassword, Length, Max, MAX, MaxLength, Min, MinLength } from "class-validator";
 import { Unique } from "typeorm";
 

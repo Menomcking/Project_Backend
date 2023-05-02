@@ -20,7 +20,16 @@ export class StoryService {
     private connection: Connection,
     private usersService: UsersService
   ) {}
-
+/**
+ * 
+ * @param picture string, a történethez tartozó kép URL-je
+ * @param rating szám, a történet értékelése
+ * @param title string, a történet címe
+ * @param description string, a történet leírása
+ * @param textPart stringekből álló tömb, a történet szöveg részei
+ * @param user Felhasználó
+ * @returns Új történet kerül létrehozásra
+ */
   async createStory(
     picture: string,
     rating: number,
@@ -71,6 +80,14 @@ export class StoryService {
       await queryRunner.release();
     }
   }
+  findAll() {
+    return `This action returns all story`;
+  }
+  /**
+   * 
+   * @param id azonosító
+   * @returns Az azonosítójához tartozó történetet adja vissza
+   */
   async findOne(id: number): Promise<Story> {
     const story = await this.storyRepository.findOne({
       where: {id},
@@ -81,13 +98,66 @@ export class StoryService {
 
   async find() { 
     const stories = await this.storyRepository.find({
-      select: [ 'id', 'title', 'description', 'picture', 'rating'],
       relations: ['storyparts', 'users', 'ratings'],
     });
-
+  
     if (stories.length == 0) {
       throw new Error(``);
     }
+  
+    return story;
+  }
+
+  /**
+   * 
+   * @param id azonosító
+   * @param updateStoryDto A történet módosításához szükséges Dto fájl
+   * @returns Elmenti a történetben keletkezett módosításokat
+   */
+  async update(id: number, updateStoryDto: UpdateStoryDto): Promise<Story> {
+    const story = await this.storyRepository.findOne({ where: { id } });
+  
+    if (!story) {
+      throw new Error(`Story with id ${id} not found`);
+    }
+  
+    const { picture, title, description, textPart } = updateStoryDto;
+  
+    if (picture !== undefined) {
+      story.picture = picture;
+    }
+    if (title !== undefined) {
+      story.title = title;
+    }
+    if (description !== undefined) {
+      story.description = description;
+    }
+  
+    const storyParts = await this.storyPartsRepository.find({
+      where: { story: { id } },
+    });
+  
+    if (textPart !== undefined) {
+      if (storyParts.length === textPart.length) {
+        for (let i = 0; i < storyParts.length; i++) {
+          storyParts[i].textPart = [textPart[i]];
+          await this.storyPartsRepository.save(storyParts[i]);
+        }
+      } else {
+        for (let i = storyParts.length; i < textPart.length; i++) {
+          const newStoryPart = new StoryParts();
+          newStoryPart.textPart = [textPart[i]];
+          newStoryPart.story = story;
+          await this.storyPartsRepository.save(newStoryPart);
+        }
+      } 
+    }
+  
+    return this.storyRepository.save(story);
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} story`;
     const selectedStories: Story[] = []
     for (let index = 0; index < 5; index++) {
       if (stories.length == 0){
@@ -100,5 +170,17 @@ export class StoryService {
     }
     
     return selectedStories;
+  }
+  /**
+   * 
+   * @param id azonosító
+   * @returns A felhasználó azonosítója alapján visszaadja a hozzá tartozó történeteket
+   */
+  async findAllByUserId(id: number): Promise<Story[]> {
+    return this.storyRepository.find({
+      where: {
+        users: { id }
+      }
+    });
   }
 }
