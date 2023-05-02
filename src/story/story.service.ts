@@ -105,7 +105,19 @@ export class StoryService {
       throw new Error(``);
     }
   
-    return story;
+    const selectedStories: Story[] = []
+    for (let index = 0; index < 5; index++) {
+      if (stories.length == 0){
+        break;
+      }
+      const selectedIndex = Math.floor(Math.random()*stories.length)
+      
+      selectedStories.push(stories[selectedIndex])
+      stories.splice(selectedIndex, 1);
+    }
+    
+    return selectedStories;
+  
   }
 
   /**
@@ -154,22 +166,6 @@ export class StoryService {
     }
   
     return this.storyRepository.save(story);
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} story`;
-    const selectedStories: Story[] = []
-    for (let index = 0; index < 5; index++) {
-      if (stories.length == 0){
-        break;
-      }
-      const selectedIndex = Math.floor(Math.random()*stories.length)
-      
-      selectedStories.push(stories[selectedIndex])
-      stories.splice(selectedIndex, 1);
-    }
-    
-    return selectedStories;
   }
   /**
    * 
