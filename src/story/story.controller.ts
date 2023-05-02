@@ -46,14 +46,4 @@ export class StoryController {
   async find() {
     return (await this.storyService.find()).map(s => ({ id: s.id, title: s.title, picture: s.picture, description: s.description, rating: s.rating}));
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoryDto: UpdateStoryDto) {
-    return this.storyService.update(+id, updateStoryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storyService.remove(+id);
-  }
 }

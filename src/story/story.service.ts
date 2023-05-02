@@ -101,13 +101,4 @@ export class StoryService {
     
     return selectedStories;
   }
-
-
-  update(id: number, updateStoryDto: UpdateStoryDto) {
-    return `This action updates a #${id} story`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} story`;
-  }
 }
