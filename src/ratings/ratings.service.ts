@@ -10,9 +10,9 @@ import { Ratings } from './entities/rating.entity';
 export class RatingsService {
   constructor(
     @InjectRepository(Ratings)
-    private readonly ratingsRepository: Repository<Ratings>,
+    private ratingsRepository: Repository<Ratings>,
     @InjectRepository(Story)
-    private readonly storyRepository: Repository<Story>,
+    private storyRepository: Repository<Story>,
   ) {}
   async create(ratingData: Partial<Ratings>): Promise<Ratings> {
     const rating = new Ratings();

@@ -8,7 +8,7 @@ import { Ratings } from './entities/rating.entity';
 export class RatingsController {
   constructor(private readonly ratingsService: RatingsService) {}
 
-  @Post()
+  @Post('create')
   async create(@Body() ratingData: Partial<Ratings>): Promise<Ratings> {
     return await this.ratingsService.create(ratingData);
   }

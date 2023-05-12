@@ -6,6 +6,8 @@ import { Story } from './entities/story.entity';
 import { StoryParts } from './entities/storyParts.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
+import { RatingsService } from 'src/ratings/ratings.service';
+import { RatingsModule } from 'src/ratings/ratings.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Story, StoryParts]), UsersModule],

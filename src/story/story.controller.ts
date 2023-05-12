@@ -32,7 +32,7 @@ export class StoryController {
       req.user as Users);
   }
 
-  @Get(':id')
+  @Get('one/:id')
   async findOne(@Param('id') id: string) {
     const story = await this.storyService.findOne(+id);
     return {
