@@ -1,0 +1,74 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Project tests",
+    "dateExported": "2023-05-12T12:35:49.931Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "51d73bdb-176d-4c48-ae03-5fba10441086",
+            "colId": "381584b0-a2f5-423f-809e-5ad1d7b885b0",
+            "containerId": "",
+            "name": "http://localhost:3000/authentication/register",
+            "url": "http://localhost:3000/authentication/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-05-12T12:10:43.446Z",
+            "modified": "2023-05-12T12:10:43.446Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"Testuser02\",\n  \"password\": \"Test.password02\",\n  \"email\": \"testuser02@email.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "af79ecba-47bd-4c44-a80e-d7b6691ec1ee",
+            "colId": "381584b0-a2f5-423f-809e-5ad1d7b885b0",
+            "containerId": "",
+            "name": "http://localhost:3000/story/add-story",
+            "url": "http://localhost:3000/story/add-story",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-05-12T12:31:54.746Z",
+            "modified": "2023-05-12T12:31:54.746Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Egy jó történet 2\",\n  \"description\": \"Egy jó leírás 2\",\n  \"picture\": \"www.kep.hu/kep2\",\n  \"textPart\": [\"Egy jó szöveg 2\", \"Még egy jó szöveg 2\", \"Egy újabb jó szöveg 2\"]\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4Mzg5NDQwNCwiZXhwIjoxNjgzODk2NDA0fQ.h1aS5Qc3r7uEuOwDP7Fi_4Qt2yOHblQiNnKhcW9edyc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f2a79ef0-b172-4bb8-b84e-d7f8ef3e3aca",
+            "colId": "381584b0-a2f5-423f-809e-5ad1d7b885b0",
+            "containerId": "",
+            "name": "http://localhost:3000/story/update-story/2",
+            "url": "http://localhost:3000/story/update-story/2",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2023-05-12T12:35:25.819Z",
+            "modified": "2023-05-12T12:35:25.819Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Egy jó történet 2\",\n  \"description\": \"Egy jó leírás 2\",\n  \"picture\": \"www.kep.hu/kep2\",\n  \"textPart\": [\"Egy jó szöveg 2\", \"Még egy jó szöveg 2\", \"Egy újabb jó szöveg 2\", \"Egy negyedik jó szöveg 2\"]\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4Mzg5NDQwNCwiZXhwIjoxNjgzODk2NDA0fQ.h1aS5Qc3r7uEuOwDP7Fi_4Qt2yOHblQiNnKhcW9edyc"
+            },
+            "tests": []
+        }
+    ]
+}
