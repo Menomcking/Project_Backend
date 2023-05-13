@@ -59,9 +59,12 @@ export class StoryController {
     ): Promise<Story> {
   return this.storyService.update(id, updateStoryDto);
   }
-
+  @Get('list')
+  async find() {
+    return (await this.storyService.find()).map(s => ({ id: s.id, title: s.title, picture: s.picture, description: s.description, rating: s.rating}));
+  }
   @Get(':id')
-  async findOnesStory(@Param('id') id: string) {
+  async findOnesStory(@Param('id') id: number) {
     const story = await this.storyService.findOne(+id);
     return {
       id: story.id,
@@ -73,10 +76,5 @@ export class StoryController {
         textPart: part.textPart,
       })),
     };
-  }
-
-  @Get('list')
-  async find() {
-    return (await this.storyService.find()).map(s => ({ id: s.id, title: s.title, picture: s.picture, description: s.description, rating: s.rating}));
   }
 }
