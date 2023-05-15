@@ -106,7 +106,7 @@ export class StoryService {
     }
   
     const selectedStories: Story[] = []
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 4; index++) {
       if (stories.length == 0){
         break;
       }
